@@ -43,6 +43,6 @@ const userSchema = new Schema({
     timestamps: true
 })
 
-const Region = mongoose.model('Region', userSchema)
+const Product = mongoose.model('Product', userSchema)
 
 module.exports = Region
