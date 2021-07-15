@@ -1,5 +1,5 @@
-import {District} from "../Models/District";
-import { errorResponse,successResponse } from "../server_responses/response";
+import {District} from "../../Models/District";
+import { errorResponse,successResponse } from "../../server_responses/response";
 
 class DistrictController
 {
@@ -17,24 +17,8 @@ class DistrictController
             return errorResponse(req,res,error)
         }
     }
-
-    verifyToken(req, res, next)
-    {
-        const bearerHeader = req.headers['authorization']
-
-        if(typeof bearerHeader !== 'undefined')
-        {
-            const bearer = bearerHeader.split(' ')
-
-            const token = bearer[1]
-
-            req.token = token
-
-            next();
-
-        }else{
-
-            res.sendStatus(403)
-        }
-    }
 }
+
+const district_controller = new DistrictController()
+
+export default district_controller

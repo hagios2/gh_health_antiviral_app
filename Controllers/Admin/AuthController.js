@@ -1,13 +1,13 @@
 import {Admin} from "../../Models/Admin.js";
 
-class AdminController
+class AuthController
 {
     async addAdmin(req, res){
 
         try{
             let  { name, email, password} = req.body
 
-            const new_admin = ({email, name, password}) //todo change password to hashed
+            //todo change password to hashed
 
             let {message, data, error} = await Admin.create_admin({name, email, password})
 
@@ -31,7 +31,27 @@ class AdminController
             })
             .catch(err => res.status(400).json({message: `Error: ${err}`}))
     }
+
+    verifyToken(req, res, next)
+    {
+        const bearerHeader = req.headers['authorization']
+
+        if(typeof bearerHeader !== 'undefined')
+        {
+            const bearer = bearerHeader.split(' ')
+
+            req.token = bearer[1]
+
+            next();
+
+        }else{
+
+            res.sendStatus(403)
+        }
+    }
 }
 
 
-model.exports = controller
+const admin_auth_controller = new AuthController()
+
+export default admin_auth_controller

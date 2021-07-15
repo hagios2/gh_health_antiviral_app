@@ -1,8 +1,9 @@
-const mongoose = require('mongoose')
+import mongoose from "mongoose"
+import {successResponse} from "../server_responses/response";
 
-const Schema = mongoose.Schema
+const { Schema } = mongoose
 
-const userSchema = new Schema({
+const regionSchema = new Schema({
     name : {
         type: String,
         required: true,
@@ -43,6 +44,52 @@ const userSchema = new Schema({
     timestamps: true
 })
 
-const Region = mongoose.model('Region', userSchema)
+class RegionClass{
+
+    static async addNewDistrict(data)
+    {
+        this.create(data)
+
+        return { message: "new admin created", error: false, data: null }
+    }
+
+    static async getDistricts(req, res)
+    {
+        let districts = await this.find({}).exec()
+
+        let message = 'success'
+
+        if (districts.length > 0)
+        {
+            return successResponse(req,res,message, districts)
+
+        }else{
+
+            return successResponse(req,res, 'No Data found', [])
+        }
+    }
+
+    static async getADistrict(req, res)
+    {
+        let district_id = req.body?.district_id
+
+        let districts = await this.find({_id: district_id}).exec()
+
+        let message = 'success'
+
+        if (disticts.length > 0)
+        {
+            return successResponse(req,res,message, districts)
+
+        }else{
+
+            return successResponse(req,res, 'No Data found', districts)
+        }
+    }
+}
+
+regionSchema.loadClass(RegionClass)
+
+const Region = mongoose.model('Region', regionSchema)
 
 module.exports = Region

@@ -35,9 +35,9 @@ const districtSchema = new Schema({
     timestamps: true
 })
 
-class createDistrict{
+class DistrictClass{
 
-    async addNewDistrict(data)
+    static async addNewDistrict(data)
     {
         this.create(data)
 
@@ -50,7 +50,7 @@ class createDistrict{
 
         let message = 'success'
 
-        if (disticts.length > 0)
+        if (districts.length > 0)
         {
             return successResponse(req,res,message, districts)
 
@@ -62,9 +62,9 @@ class createDistrict{
 
     static async getADistrict(req, res)
     {
-        let {district_id} = req.body
+        let district_id = req.body?.district_id
 
-        let districts = await this.find({}).exec()
+        let districts = await this.find({_id: district_id}).exec()
 
         let message = 'success'
 
@@ -78,6 +78,8 @@ class createDistrict{
         }
     }
 }
+
+districtSchema.loadClass(DistrictClass)
 
 const District = mongoose.model('District', districtSchema)
 
