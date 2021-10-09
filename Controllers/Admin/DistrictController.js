@@ -6,9 +6,16 @@ class DistrictController
     async createDistrict(req, res)
     {
         try{
-            let {name, name_of_district_health_directorate, lat, long,  address_of_district_health_directorate} = req.body
+            let {name, address_of_district_health_directorate, name_of_district_health_directorate, region_id} = req.body
 
-            let {message, data, error } = await District.addNewDistrict({name, name_of_district_health_directorate, address_of_district_health_directorate, lat, long})
+            let existing_district = await District.find({name})
+
+            if(Object.keys(existing_district).length > 0)
+            {    
+                return errorResponse(req, res, 'Name of District has already been taken', 422)
+            }
+
+            let {message, data } = await District.addNewDistrict({name, address_of_district_health_directorate, name_of_district_health_directorate, region_id})
 
             return successResponse(req,res,message, data)
         }
@@ -24,7 +31,7 @@ class DistrictController
             
             let data = await District.find({})
 
-            return successResponse.apply(req, res, 'success', data)
+            return successResponse(req, res, 'success', data)
         }
         catch(error){
             
@@ -35,18 +42,66 @@ class DistrictController
 
     async getDistrict(req, res)
     {
-        return successResponse()
+        try{
+            
+            let data = await District.findById(req.params.district_id)
+
+            if(Object.keys(data).length === 0)
+            {    
+                return errorResponse(req, res, 'Not Found', 404)
+            }
+
+            return successResponse(req, res, 'success', data)
+        }
+        catch(error){
+            
+            return errorResponse(req,res,error, 404)
+        }
     }
 
-    async updateDistrict()
+    async updateDistrict(req, res)
     {
+        try{
+            
+            let data = await District.findById(req.params.district_id)
 
+            if(Object.keys(data).length === 0)
+            {    
+                return errorResponse(req, res, 'Not Found', 404)
+            }
+
+            let { name, address_of_district_health_directorate, name_of_district_health_directorate, region_id} = req.body
+
+           let { updated_data } = await District.updateOne({_id: req.params.district_id}, {name, address_of_district_health_directorate, name_of_district_health_directorate, region_id})
+
+            return successResponse(req, res, 'District updated', updated_data)
+        }
+        catch(error){
+            
+            return errorResponse(req,res,error, 404)
+        }
     }
 
 
-    async deleteDistrict()
+    async deleteDistrict(req, res)
     {
-        
+        try{
+            
+            let data = await District.findById(req.params.district_id)
+
+            if(Object.keys(data).length === 0)
+            {    
+                return errorResponse(req, res, 'Not Found', 404)
+            }
+
+            await District.remove({_id: req.params.district_id})
+
+            return successResponse(req, res, 'District deleted', {})
+        }
+        catch(error){
+            
+            return errorResponse(req,res,error, 404)
+        }
     }
 }
 

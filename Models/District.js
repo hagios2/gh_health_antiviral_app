@@ -27,30 +27,19 @@ const districtSchema = new Schema({
 
 class DistrictClass{
 
-    static async addNewDistrict(data)
+    async addNewDistrict(data)
     {
         return this.create(data)
-
-        // return { message: "new admin created", error: false, data: null }
     }
 
-    static async getDistricts(req, res)
-    {
-        let districts = await this.find({}).exec()
+    // async getDistricts(req, res)
+    // {
+    //     let districts = await District.find({})
 
-        let message = 'success'
+    //     return successResponse(req, res, 'success', districts)
+    // }
 
-        if (districts.length > 0)
-        {
-            return successResponse(req,res,message, districts)
-
-        }else{
-
-            return successResponse(req,res, 'No Data found', [])
-        }
-    }
-
-    static async getADistrict(req, res)
+    async getADistrict(req, res)
     {
         let district_id = req.body?.district_id
 

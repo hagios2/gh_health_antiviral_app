@@ -15,13 +15,13 @@ router.get("/add/new/admin", AdminAuthController.addAdmin)
 
 router.get("/get/districts", DistrictController.getDistricts)
 
-router.get("/{:district_id}/fetch", DistrictController.getDistrict)
+router.get("/district/:district_id/fetch", DistrictController.getDistrict)
 
-router.post("/create", DistrictController.createDistrict)
+router.post("/create/district", DistrictController.createDistrict)
 
-router.delete("/delete/district", DistrictController.deleteDistrict)
+router.delete("/delete/:district_id/district", DistrictController.deleteDistrict)
 
-router.put("/update/district", DistrictController.updateDistrict)
+router.put("/update/:district_id/district", DistrictController.updateDistrict)
 
 //----------------------- End District -----------------------------
 
