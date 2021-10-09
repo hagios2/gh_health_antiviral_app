@@ -15,9 +15,9 @@ router.get("/add/new/admin", AdminAuthController.addAdmin)
 
 router.get("/get/districts", DistrictController.getDistricts)
 
-router.get("/get/{:district_id}/district", DistrictController.getDistrict)
+router.get("/{:district_id}/fetch", DistrictController.getDistrict)
 
-router.post("/create/district", DistrictController.createDistrict)
+router.post("/create", DistrictController.createDistrict)
 
 router.delete("/delete/district", DistrictController.deleteDistrict)
 
@@ -28,15 +28,15 @@ router.put("/update/district", DistrictController.updateDistrict)
 
 //----------------------- Region -----------------------------
 
-// router.get("/get/regions", RegionController.getRegions)
+router.get("/get/regions", RegionController.getRegions)
 
-router.get("/get/{:region_id}/region", RegionController.getRegion)
+router.get("/get/:region_id/region", RegionController.getRegion)
 
 router.post("/create/region", RegionController.createRegion)
 
-router.delete("/delete/region", RegionController.deleteRegion)
+router.delete("/delete/:region_id/region", RegionController.deleteRegion)
 
-router.put("/update/region", RegionController.updateRegion)
+router.put("/update/:region_id/region", RegionController.updateRegion)
 
 //----------------------- End District -----------------------------
 

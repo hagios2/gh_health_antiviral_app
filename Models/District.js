@@ -20,16 +20,6 @@ const districtSchema = new Schema({
         type: String,
         required: [true, 'address of district health directorate is required'],
         trim: true,
-    },
-    lat : {
-        type: Number,
-        required: [true, 'latitude is required'],
-        trim: true,
-    },
-    long : {
-        type: Number,
-        required: [true, 'longitude is required'],
-        trim: true,
     }
 }, {
     timestamps: true
@@ -39,9 +29,9 @@ class DistrictClass{
 
     static async addNewDistrict(data)
     {
-        this.create(data)
+        return this.create(data)
 
-        return { message: "new admin created", error: false, data: null }
+        // return { message: "new admin created", error: false, data: null }
     }
 
     static async getDistricts(req, res)

@@ -5,40 +5,105 @@ class RegionController
 {
     async createRegion(req, res)
     {
+        
         try{
-            let {name, name_of_regional_minister, address_of_regional_minister, name_of_director_general,  address_of_director_general, name_of_regional_health_director, address_of_regional_health_director} = req.body
+            let {name, name_of_regional_minister, address_of_regional_minister, name_of_director_general, address_of_director_general, name_of_regional_health_director, address_of_regional_health_director } = req.body
 
-            let {message, data, error } = await Region.addNewRegion({name, name_of_regional_minister, address_of_regional_minister, name_of_director_general,  address_of_director_general, name_of_regional_health_director, address_of_regional_health_director})
+            let existing_regions = await Region.find({name})
 
-            return successResponse(req,res,message, data)
+            if(Object.keys(existing_regions).length > 0)
+            {    
+                return errorResponse(req, res, 'Name of Region has already been taken', 422)
+            }
+
+            let {message, data } = await Region.addNewRegion({name, name_of_regional_minister, address_of_regional_minister, name_of_director_general,  address_of_director_general, name_of_regional_health_director, address_of_regional_health_director})
+
+            return successResponse(req, res, message, data)
         }
         catch (error) {
 
-            return errorResponse(req,res,error)
+            return errorResponse(req, res, error)
         }
     }
 
 
     async getRegions(req, res)
     {
+        try{
+            
+            let data = await Region.find({})
 
+            return successResponse(req, res, 'success', data)
+        }
+        catch(error){
+            
+            return errorResponse(req,res,error)
+        }
     }
 
 
     async getRegion(req, res)
     {
-        return successResponse()
+        try{
+            
+            let data = await Region.findById(req.params.region_id)
+
+            if(Object.keys(data).length === 0)
+            {    
+                return errorResponse(req, res, 'Not Found', 404)
+            }
+
+            return successResponse(req, res, 'success', data)
+        }
+        catch(error){
+            
+            return errorResponse(req,res,error, 404)
+        }
     }
 
-    async updateRegion()
+    async updateRegion(req, res)
     {
+        try{
+            
+            let data = await Region.findById(req.params.region_id)
 
+            if(Object.keys(data).length === 0)
+            {    
+                return errorResponse(req, res, 'Not Found', 404)
+            }
+
+            let {name, name_of_regional_minister, address_of_regional_minister, name_of_director_general, address_of_director_general, name_of_regional_health_director, address_of_regional_health_director } = req.body
+
+           let { updated_data } = await Region.updateOne({_id: req.params.region_id}, {name, name_of_regional_minister, address_of_regional_minister, name_of_director_general, address_of_director_general, name_of_regional_health_director, address_of_regional_health_director})
+
+            return successResponse(req, res, 'Region updated', updated_data)
+        }
+        catch(error){
+            
+            return errorResponse(req,res,error, 404)
+        }
     }
 
 
-    async deleteRegion()
+    async deleteRegion(req, res)
     {
-        
+        try{
+            
+            let data = await Region.findById(req.params.region_id)
+
+            if(Object.keys(data).length === 0)
+            {    
+                return errorResponse(req, res, 'Not Found', 404)
+            }
+
+            await Region.remove({_id: req.params.region_id})
+
+            return successResponse(req, res, 'Region deleted', {})
+        }
+        catch(error){
+            
+            return errorResponse(req,res,error, 404)
+        }
     }
 }
 

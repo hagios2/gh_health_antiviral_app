@@ -6,7 +6,7 @@ const errorResponse = (req,res, error, code=500) => {
     })
 }
 
-const successResponse = (req,res, msg="OK", data=null, code=200) => {
+const successResponse = (req, res, msg="OK", data=null, code=200) => {
 
     return res.status(code).json({
         success: msg,

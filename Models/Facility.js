@@ -13,14 +13,14 @@ const facilitySchema = new Schema({
         required: true,
         trim: true,
     },
-    lat: {
-        type: String,
-        required: true,
+    lat : {
+        type: Number,
+        required: [true, 'latitude is required'],
         trim: true,
     },
-    lat: {
-        type: String,
-        required: true,
+    long : {
+        type: Number,
+        required: [true, 'longitude is required'],
         trim: true,
     },
     district_id: {

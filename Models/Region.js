@@ -46,11 +46,9 @@ const regionSchema = new Schema({
 
 class RegionClass{
 
-    static async addNewDistrict(data)
+    static async addNewRegion(data)
     {
-        this.create(data)
-
-        return { message: "new admin created", error: false, data: null }
+        return this.create(data)
     }
 
     static async getDistricts(req, res)

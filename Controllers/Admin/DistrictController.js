@@ -20,7 +20,16 @@ class DistrictController
 
     async getDistricts(req, res)
     {
+        try{
+            
+            let data = await District.find({})
 
+            return successResponse.apply(req, res, 'success', data)
+        }
+        catch(error){
+            
+            return errorResponse(req,res,error)
+        }
     }
 
 
