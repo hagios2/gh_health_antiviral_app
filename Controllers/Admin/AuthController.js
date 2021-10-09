@@ -1,4 +1,4 @@
-import {Admin} from "../../Models/Admin.js";
+import {Admin} from '../../Models/Admin.js';
 
 class AuthController
 {
@@ -52,6 +52,6 @@ class AuthController
 }
 
 
-const admin_auth_controller = new AuthController()
+const AdminAuthController = new AuthController()
 
-export default admin_auth_controller
+export default AdminAuthController

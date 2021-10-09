@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import {successResponse} from "../server_responses/response";
+import {successResponse} from "../server_responses/response.js";
 
 const { Schema } = mongoose
 
@@ -92,4 +92,4 @@ regionSchema.loadClass(RegionClass)
 
 const Region = mongoose.model('Region', regionSchema)
 
-module.exports = Region
+export { Region }

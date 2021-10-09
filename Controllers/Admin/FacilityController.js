@@ -1,14 +1,14 @@
-import {District} from "../../Models/District.js";
+import {Facility} from "../../Models/Facility.js";
 import { errorResponse,successResponse } from "../../server_responses/response.js";
 
-class DistrictController
+class FacilityController
 {
-    async createDistrict(req, res)
+    async createFacility(req, res)
     {
         try{
             let {name, name_of_district_health_directorate, lat, long,  address_of_district_health_directorate} = req.body
 
-            let {message, data, error } = await District.addNewDistrict({name, name_of_district_health_directorate, address_of_district_health_directorate, lat, long})
+            let {message, data, error } = await Facility.createFacilty({name, name_of_district_health_directorate, address_of_district_health_directorate, lat, long})
 
             return successResponse(req,res,message, data)
         }
@@ -18,29 +18,29 @@ class DistrictController
         }
     }
 
-    async getDistricts(req, res)
+    async getFacilities(req, res)
     {
 
     }
 
 
-    async getDistrict(req, res)
+    async getFacility(req, res)
     {
         return successResponse()
     }
 
-    async updateDistrict()
+    async updateFacility()
     {
 
     }
 
 
-    async deleteDistrict()
+    async deleteFacility()
     {
         
     }
 }
 
-const district_controller = new DistrictController()
+const facility_controller = new FacilityController()
 
-export default district_controller
+export default facility_controller
