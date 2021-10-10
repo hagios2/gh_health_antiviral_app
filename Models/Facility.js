@@ -1,14 +1,9 @@
 import mongoose from "mongoose";
 
-const Schema = mongoose.Schema
+const { Schema } = mongoose
 
 const facilitySchema = new Schema({
     name: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    town: {
         type: String,
         required: true,
         trim: true,
@@ -23,12 +18,7 @@ const facilitySchema = new Schema({
         required: [true, 'longitude is required'],
         trim: true,
     },
-    district_id: {
-        type: String,
-        required: true,
-        trim: true,
-    }
-
+    district_id: {type: Schema.Types.ObjectId, ref: 'District', required: true},
 }, {
     timestamps: true
 })
@@ -36,13 +26,13 @@ const facilitySchema = new Schema({
 
 class FacilityClass{
 
-    async create_facility(data)
+    static async addNewFacility(data)
     {
-        await this.create(data)
-
-        return {message: 'New Facility Created', error: false, data: null }
+        return await this.create(data)
     }
 }
+
+facilitySchema.loadClass(FacilityClass)
 
 const Facility = mongoose.model('Facility', facilitySchema)
 

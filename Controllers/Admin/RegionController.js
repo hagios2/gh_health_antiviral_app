@@ -74,7 +74,7 @@ class RegionController
 
             let {name, name_of_regional_minister, address_of_regional_minister, name_of_director_general, address_of_director_general, name_of_regional_health_director, address_of_regional_health_director } = req.body
 
-           let { updated_data } = await Region.updateOne({_id: req.params.region_id}, {name, name_of_regional_minister, address_of_regional_minister, name_of_director_general, address_of_director_general, name_of_regional_health_director, address_of_regional_health_director})
+           let updated_data = await Region.updateOne({_id: req.params.region_id}, {name, name_of_regional_minister, address_of_regional_minister, name_of_director_general, address_of_director_general, name_of_regional_health_director, address_of_regional_health_director})
 
             return successResponse(req, res, 'Region updated', updated_data)
         }

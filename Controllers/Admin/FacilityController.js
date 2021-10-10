@@ -5,39 +5,99 @@ class FacilityController
 {
     async createFacility(req, res)
     {
+       
         try{
-            let {name, name_of_district_health_directorate, lat, long,  address_of_district_health_directorate} = req.body
+            let {name, lat, long, district_id} = req.body
 
-            let {message, data, error } = await Facility.createFacilty({name, name_of_district_health_directorate, address_of_district_health_directorate, lat, long})
+            let data = await Facility.addNewFacility({name, lat, long, district_id})
 
-            return successResponse(req,res,message, data)
+            // return res.json({data: req.body})
+            
+            return successResponse(req, res, 'success', data)
+
         }
-        catch (error) {
-
+        catch(error){
+            
             return errorResponse(req,res,error)
         }
     }
 
     async getFacilities(req, res)
     {
+        try{
+            
+            let data = await Facility.find({})
 
+            return successResponse(req, res, 'success', data)
+        }
+        catch(error){
+            
+            return errorResponse(req,res,error)
+        }
     }
-
 
     async getFacility(req, res)
     {
-        return successResponse()
+        try{
+            
+            let data = await Facility.findById(req.params.facility_id)
+
+            if(Object.keys(data).length === 0)
+            {    
+                return errorResponse(req, res, 'Not Found', 404)
+            }
+
+            return successResponse(req, res, 'success', data)
+        }
+        catch(error){
+            
+            return errorResponse(req,res,error, 404)
+        }
     }
 
-    async updateFacility()
+    async updateFacility(req, res)
     {
+        try{
+            
+            let data = await Facility.findById(req.params.facility_id)
 
+            if(Object.keys(data).length === 0)
+            {    
+                return errorResponse(req, res, 'Not Found', 404)
+            }
+
+            let { name, lat, long, district_id} = req.body
+
+            let updated_data = await Facility.updateOne({_id: req.params.facility_id}, {name, lat, long, district_id})
+
+            return successResponse(req, res, 'District updated', updated_data)
+        }
+        catch(error){
+            
+            return errorResponse(req,res, 'Not Found', 404)
+        }
     }
 
 
-    async deleteFacility()
+    async deleteFacility(req, res)
     {
-        
+        try{
+            
+            let data = await Facility.findById(req.params.facility_id)
+
+            if(Object.keys(data).length === 0)
+            {    
+                return errorResponse(req, res, 'Not Found', 404)
+            }
+
+            await Facility.remove({_id: req.params.facility_id})
+
+            return successResponse(req, res, 'Facility deleted', {})
+        }
+        catch(error){
+            
+            return errorResponse(req, res, 'Not Found', 404)
+        }
     }
 }
 

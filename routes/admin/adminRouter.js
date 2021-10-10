@@ -43,15 +43,15 @@ router.put("/update/:region_id/region", RegionController.updateRegion)
 
 //----------------------- Facility -----------------------------
 
-router.get("/get/facility", FacilityController.getFacilities)
+router.get("/get/facilities", FacilityController.getFacilities)
 
-router.get("/get/{:facility_id}/facility", FacilityController.getFacility)
+router.get("/get/:facility_id/facility", FacilityController.getFacility)
 
 router.post("/create/facility", FacilityController.createFacility)
 
-router.delete("/delete/facility", FacilityController.deleteFacility)
+router.delete("/delete/:facility_id/facility", FacilityController.deleteFacility)
 
-router.put("/update/facility", FacilityController.updateFacility)
+router.put("/update/:facility_id/facility", FacilityController.updateFacility)
 
 //----------------------- End Facility -----------------------------
 

@@ -51,39 +51,6 @@ class RegionClass{
         return this.create(data)
     }
 
-    static async getDistricts(req, res)
-    {
-        let districts = await this.find({}).exec()
-
-        let message = 'success'
-
-        if (districts.length > 0)
-        {
-            return successResponse(req,res,message, districts)
-
-        }else{
-
-            return successResponse(req,res, 'No Data found', [])
-        }
-    }
-
-    static async getADistrict(req, res)
-    {
-        let district_id = req.body?.district_id
-
-        let districts = await this.find({_id: district_id}).exec()
-
-        let message = 'success'
-
-        if (disticts.length > 0)
-        {
-            return successResponse(req,res,message, districts)
-
-        }else{
-
-            return successResponse(req,res, 'No Data found', districts)
-        }
-    }
 }
 
 regionSchema.loadClass(RegionClass)

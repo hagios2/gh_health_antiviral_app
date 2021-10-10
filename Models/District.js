@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import {successResponse} from "../server_responses/response.js";
 
 const { Schema } = mongoose
 
@@ -27,35 +26,11 @@ const districtSchema = new Schema({
 
 class DistrictClass{
 
-    async addNewDistrict(data)
+    static async addNewDistrict(data)
     {
-        return this.create(data)
+        return await this.create(data)
     }
-
-    // async getDistricts(req, res)
-    // {
-    //     let districts = await District.find({})
-
-    //     return successResponse(req, res, 'success', districts)
-    // }
-
-    async getADistrict(req, res)
-    {
-        let district_id = req.body?.district_id
-
-        let districts = await this.find({_id: district_id}).exec()
-
-        let message = 'success'
-
-        if (disticts.length > 0)
-        {
-            return successResponse(req,res,message, districts)
-
-        }else{
-
-            return successResponse(req,res, 'No Data found', districts)
-        }
-    }
+   
 }
 
 districtSchema.loadClass(DistrictClass)
