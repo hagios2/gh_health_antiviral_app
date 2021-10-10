@@ -3,55 +3,56 @@ import AdminAuthController from '../../Controllers/Admin/AuthController.js'
 import DistrictController from '../../Controllers/Admin/DistrictController.js'
 import FacilityController from '../../Controllers/Admin/FacilityController.js'
 import RegionController from '../../Controllers/Admin/RegionController.js'
+import { verifyToken } from '../../Middleware/auth.js'
 
 
 const router = express.Router()
 
 
-router.get("/add/new/admin", AdminAuthController.addAdmin)
+router.get("/add/new/admin", verifyToken, AdminAuthController.addAdmin)
 
 
 //----------------------- District -----------------------------
 
-router.get("/get/districts", DistrictController.getDistricts)
+router.get("/get/districts", verifyToken, DistrictController.getDistricts)
 
-router.get("/district/:district_id/fetch", DistrictController.getDistrict)
+router.get("/district/:district_id/fetch", verifyToken, DistrictController.getDistrict)
 
-router.post("/create/district", DistrictController.createDistrict)
+router.post("/create/district", verifyToken, DistrictController.createDistrict)
 
-router.delete("/delete/:district_id/district", DistrictController.deleteDistrict)
+router.delete("/delete/:district_id/district", verifyToken, DistrictController.deleteDistrict)
 
-router.put("/update/:district_id/district", DistrictController.updateDistrict)
+router.put("/update/:district_id/district", verifyToken, DistrictController.updateDistrict)
 
 //----------------------- End District -----------------------------
 
 
 //----------------------- Region -----------------------------
 
-router.get("/get/regions", RegionController.getRegions)
+router.get("/get/regions", verifyToken, RegionController.getRegions)
 
-router.get("/get/:region_id/region", RegionController.getRegion)
+router.get("/get/:region_id/region", verifyToken, RegionController.getRegion)
 
-router.post("/create/region", RegionController.createRegion)
+router.post("/create/region", verifyToken, RegionController.createRegion)
 
-router.delete("/delete/:region_id/region", RegionController.deleteRegion)
+router.delete("/delete/:region_id/region", verifyToken, RegionController.deleteRegion)
 
-router.put("/update/:region_id/region", RegionController.updateRegion)
+router.put("/update/:region_id/region", verifyToken, RegionController.updateRegion)
 
 //----------------------- End District -----------------------------
 
 
 //----------------------- Facility -----------------------------
 
-router.get("/get/facilities", FacilityController.getFacilities)
+router.get("/get/facilities", verifyToken, FacilityController.getFacilities)
 
-router.get("/get/:facility_id/facility", FacilityController.getFacility)
+router.get("/get/:facility_id/facility", verifyToken, FacilityController.getFacility)
 
-router.post("/create/facility", FacilityController.createFacility)
+router.post("/create/facility", verifyToken, FacilityController.createFacility)
 
-router.delete("/delete/:facility_id/facility", FacilityController.deleteFacility)
+router.delete("/delete/:facility_id/facility", verifyToken, FacilityController.deleteFacility)
 
-router.put("/update/:facility_id/facility", FacilityController.updateFacility)
+router.put("/update/:facility_id/facility", verifyToken, FacilityController.updateFacility)
 
 //----------------------- End Facility -----------------------------
 

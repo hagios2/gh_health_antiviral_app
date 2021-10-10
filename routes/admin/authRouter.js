@@ -3,7 +3,11 @@ import AdminAuthController from "../../Controllers/Admin/AuthController.js"
 
 const router = express.Router()
 
-router.get("/add/new/admin", AdminAuthController.addAdmin)
+router.post("/add/new/admin", AdminAuthController.addAdmin)
+
+router.get("/add/new/admin", AdminAuthController.fetchAdmins)
+
+router.post("/login", AdminAuthController.login)
 
 export default router
 

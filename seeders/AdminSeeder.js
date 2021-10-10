@@ -2,20 +2,19 @@ import connection  from '../config/db.js'
 import { Admin } from '../Models/Admin.js'
 import bcrypt from 'bcrypt'
 
-
 const superAdminSeeder = async () => {
 
     try {
 
-        const name = 'Emmnauel Oteng Wilson'
+        const name = 'Emmanuel Oteng Wilson'
+
         const email = 'hagioswilson@gmail.com'
+
         const password = '123456'
 
-        const salt = await bcrypt.genSalt()
+        const hashedPassword = await bcrypt.hash(password, 10)
 
-        const hashedPassword = await bcrypt.hash(password, salt)
-
-        if(salt && hashedPassword)
+        if(hashedPassword)
         {
             console.log('new password is ', hashedPassword)
 

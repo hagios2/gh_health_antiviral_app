@@ -28,8 +28,8 @@ const adminSchema = new Schema({
 
 class AdminClass {
 
-    async create_admin(data){
-
+    async create_admin(data)
+    {
         return this.create(data);
     }
 }
