@@ -10,8 +10,6 @@ class FacilityController
             let {name, lat, long, district_id} = req.body
 
             let data = await Facility.addNewFacility({name, lat, long, district_id})
-
-            // return res.json({data: req.body})
             
             return successResponse(req, res, 'success', data)
 
