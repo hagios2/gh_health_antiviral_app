@@ -1,4 +1,5 @@
 import {Admin} from '../../Models/Admin.js';
+import {successResponse, errorResponse} from '../../server_responses/response.js'
 
 class AuthController
 {
@@ -18,18 +19,28 @@ class AuthController
         }
     }
 
-    login(req, res){
+    async login(req, res){
 
-        let email = req.body.email
-        let password = req.body.password
+        try{
+            
+            let {email, password} = req.body
 
-        Admin.find({email, password})
-            .then(user => {
-                jwt.sign({user}, process.env.SECRET, (err, token) => {
-                    res.json({token})
-                })
-            })
-            .catch(err => res.status(400).json({message: `Error: ${err}`}))
+            let admin = Admin.findOne({email, password})
+
+            if(!admin)
+            {
+                return errorResponse(req, res, 'Invalid Credentials', 401) 
+            }
+    
+            const access_token = jwt.sign(admin, process.env.SECRET)
+                    
+                
+            return successResponse(req, res, 'success', {access_token})
+        }
+        catch(error)
+        {
+            return errorResponse(req, res, error)
+        }
     }
 
     verifyToken(req, res, next)

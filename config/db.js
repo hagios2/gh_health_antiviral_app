@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config({ path: './config/.env'})
 
-const url = process.env.DB_URL ?? 'mongodb+srv://oteng:toor8853@cluster0.pfczz.mongodb.net/ghana_health?retryWrites=true&w=majority'
-
-console.log(url)
+const url = process.env.DB_URL
 
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true,  useCreateIndex: true})
 
