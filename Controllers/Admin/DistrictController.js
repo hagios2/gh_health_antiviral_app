@@ -6,7 +6,7 @@ class DistrictController
     async createDistrict(req, res)
     {
         try{
-            let {name, address_of_district_health_directorate, name_of_district_health_directorate, region_id} = req.body
+            let {name, address_of_district_health_directorate, name_of_district_health_directorate, region} = req.body
 
             let existing_district = await District.find({name})
 
@@ -15,9 +15,9 @@ class DistrictController
                 return errorResponse(req, res, 'Name of District has already been taken', 422)
             }
 
-            let {message, data } = await District.addNewDistrict({name, address_of_district_health_directorate, name_of_district_health_directorate, region_id})
+            let new_district = await District.addNewDistrict({name, address_of_district_health_directorate, name_of_district_health_directorate, region})
 
-            return successResponse(req,res,message, data)
+            return successResponse(req, res, 'success', new_district)
         }
         catch (error) {
 
@@ -29,9 +29,9 @@ class DistrictController
     {
         try{
             
-            let data = await District.find({})
+            let districts = await District.find({})
 
-            return successResponse(req, res, 'success', data)
+            return successResponse(req, res, 'success', districts)
         }
         catch(error){
             
@@ -44,14 +44,16 @@ class DistrictController
     {
         try{
             
-            let data = await District.findById(req.params.district_id)
+            let district = await District.findById(req.params.district_id)
 
-            if(Object.keys(data).length === 0)
+            if(Object.keys(district).length === 0)
             {    
                 return errorResponse(req, res, 'Not Found', 404)
             }
+            
+            await district.populate(region).exePopulate()
 
-            return successResponse(req, res, 'success', data)
+            return successResponse(req, res, 'success', district)
         }
         catch(error){
             
@@ -70,9 +72,9 @@ class DistrictController
                 return errorResponse(req, res, 'Not Found', 404)
             }
 
-            let { name, address_of_district_health_directorate, name_of_district_health_directorate, region_id} = req.body
+            let { name, address_of_district_health_directorate, name_of_district_health_directorate, region} = req.body
 
-           let { updated_data } = await District.updateOne({_id: req.params.district_id}, {name, address_of_district_health_directorate, name_of_district_health_directorate, region_id})
+           let updated_data = await District.updateOne({_id: req.params.district_id}, {name, address_of_district_health_directorate, name_of_district_health_directorate, region})
 
             return successResponse(req, res, 'District updated', updated_data)
         }

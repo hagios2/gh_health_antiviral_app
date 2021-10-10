@@ -9,7 +9,7 @@ const districtSchema = new Schema({
         unique:true,
         trim: true,
     },
-    region_id: {type: Schema.Types.ObjectId, ref: 'Region', required: true},
+    region: {type: Schema.Types.ObjectId, ref: 'Region', required: true},
     name_of_district_health_directorate : {
         type: String,
         required: [true, 'name of district health directorate is required'],

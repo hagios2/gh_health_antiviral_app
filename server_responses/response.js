@@ -1,17 +1,11 @@
 const errorResponse = (req,res, error, code=500) => {
 
-    return res.status(code).json({
-        error: error,
-        data: null,
-    })
+    return res.status(code).json({error: error})
 }
 
-const successResponse = (req, res, msg="OK", data=null, code=200) => {
+const successResponse = (req, res, message = "OK", data = {}, code=200) => {
 
-    return res.status(code).json({
-        success: msg,
-        data: data
-    })
+    return res.status(code).json({message, data})
 }
 
 export { errorResponse, successResponse }

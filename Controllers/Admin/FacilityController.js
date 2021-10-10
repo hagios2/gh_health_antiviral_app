@@ -9,9 +9,9 @@ class FacilityController
         try{
             let {name, lat, long, district_id} = req.body
 
-            let data = await Facility.addNewFacility({name, lat, long, district_id})
+            let facility = await Facility.addNewFacility({name, lat, long, district_id})
             
-            return successResponse(req, res, 'success', data)
+            return successResponse(req, res, 'success', facility)
 
         }
         catch(error){
@@ -24,9 +24,9 @@ class FacilityController
     {
         try{
             
-            let data = await Facility.find({})
+            let facilities = await Facility.find({})
 
-            return successResponse(req, res, 'success', data)
+            return successResponse(req, res, 'success', facilities)
         }
         catch(error){
             
@@ -38,14 +38,16 @@ class FacilityController
     {
         try{
             
-            let data = await Facility.findById(req.params.facility_id)
+            let facility = await Facility.findById(req.params.facility_id)
 
-            if(Object.keys(data).length === 0)
+            if(Object.keys(facility).length === 0)
             {    
                 return errorResponse(req, res, 'Not Found', 404)
             }
 
-            return successResponse(req, res, 'success', data)
+            await facility.populate('district').execPopulate()
+
+            return successResponse(req, res, 'success', facility)
         }
         catch(error){
             
@@ -64,9 +66,9 @@ class FacilityController
                 return errorResponse(req, res, 'Not Found', 404)
             }
 
-            let { name, lat, long, district_id} = req.body
+            let { name, lat, long, district} = req.body
 
-            let updated_data = await Facility.updateOne({_id: req.params.facility_id}, {name, lat, long, district_id})
+            let updated_data = await Facility.updateOne({_id: req.params.facility_id}, {name, lat, long, district})
 
             return successResponse(req, res, 'District updated', updated_data)
         }
@@ -90,7 +92,7 @@ class FacilityController
 
             await Facility.remove({_id: req.params.facility_id})
 
-            return successResponse(req, res, 'Facility deleted', {})
+            return successResponse(req, res, 'Facility deleted')
         }
         catch(error){
             
