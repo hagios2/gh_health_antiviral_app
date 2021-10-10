@@ -10,12 +10,13 @@ class AuthController
 
             //todo change password to hashed
 
-            let {message, data, error} = await Admin.create_admin({name, email, password})
+            let admin = await Admin.create_admin({name, email, password})
 
-            return successResponse(req,res, message, data)
+            return successResponse(req,res, message, admin)
 
-        }catch (e) {
+        }catch (error) {
 
+            return errorResponse(req,res, error)
         }
     }
 
@@ -43,7 +44,7 @@ class AuthController
         }
     }
 
-    verifyToken(req, res, next)
+    async verifyToken(req, res, next)
     {
         const bearerHeader = req.headers['authorization']
 

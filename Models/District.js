@@ -34,9 +34,9 @@ class DistrictClass{
 
     static async addNewDistrict(data)
     {
-        return await this.create(data)
+        return this.create(data);
     }
-   
+
 }
 
 districtSchema.loadClass(DistrictClass)

@@ -18,6 +18,10 @@ const adminSchema = new Schema({
         type: String,
         required: true,
     },
+    status : {
+        type: Boolean,
+        default: true
+    },
 }, {
     timestamps: true
 })
@@ -26,9 +30,7 @@ class AdminClass {
 
     async create_admin(data){
 
-        await this.create(data)
-
-        return { message: "new admin created", error: false, data: null }
+        return this.create(data);
     }
 }
 
