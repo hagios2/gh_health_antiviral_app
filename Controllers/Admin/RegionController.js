@@ -31,9 +31,9 @@ class RegionController
     {
         try{
             
-            let data = await Region.find({})
+            let regions = await Region.find({})
 
-            return successResponse(req, res, 'success', data)
+            return successResponse(req, res, 'success', regions)
         }
         catch(error){
             
@@ -46,14 +46,16 @@ class RegionController
     {
         try{
             
-            let data = await Region.findById(req.params.region_id)
+            let region = await Region.findById(req.params.region_id)
 
-            if(Object.keys(data).length === 0)
+            if(Object.keys(region).length === 0)
             {    
                 return errorResponse(req, res, 'Not Found', 404)
             }
 
-            return successResponse(req, res, 'success', data)
+            await region.populate('districts').execPopulate()
+
+            return successResponse(req, res, 'success', region)
         }
         catch(error){
             

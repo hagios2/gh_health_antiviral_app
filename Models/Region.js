@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import {successResponse} from "../server_responses/response.js";
 
 const { Schema } = mongoose
 
@@ -42,6 +41,12 @@ const regionSchema = new Schema({
     }
 }, {
     timestamps: true
+})
+
+regionSchema.virtual('districts', {
+    ref: 'District',
+    localField: '_id',
+    foreignField: 'region'
 })
 
 class RegionClass{

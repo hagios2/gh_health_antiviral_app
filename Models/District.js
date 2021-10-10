@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { Facility } from "./Facility.js"
 
 const { Schema } = mongoose
 
@@ -24,6 +25,11 @@ const districtSchema = new Schema({
     timestamps: true
 })
 
+districtSchema.virtual('facilities', {
+    ref: 'Facility',
+    localField: '_id',
+    foreignField: 'facility'
+})
 class DistrictClass{
 
     static async addNewDistrict(data)
