@@ -113,14 +113,14 @@ class AuthController
     {
        const refresh_token = req.body.refresh_token
 
-        if(refresh_token == null)
+        if(refresh_token === null)
         {
             return res.sendStatus(401)
         }
 
         await RefreshToken.remove({refresh_token, provider: 'admin'})
 
-        return successResponse(req, res, 'success', 204)
+        return successResponse(req, res, 'success', {}, 204)
     }
 }
 
