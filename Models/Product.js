@@ -2,47 +2,60 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema
 
-const userSchema = new Schema({
+const productSchema = new Schema({
     name : {
         type: String,
         required: true,
         unique:true,
         trim: true,
     },
-    name_of_regional_minister : {
+    quantity : {
+        type: Number,
+        required: true,
+    },
+    expiry_date : {
+        type: Date,
+        required: true,
+    },
+    facility: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Facility'
+    },
+    source : {
         type: String,
         required: true,
         trim: true,
     },
-    address_of_regional_minister : {
+    brand : {
         type: String,
         required: true,
         trim: true,
     },
-    name_of_director_general : {
-        type: String,
-        required: true,
+    description : {
+        type: Text,
+        required: false,
         trim: true,
     },
-    address_of_director_general : {
-        type: String,
+    receiver : {
+        type: Schema.Types.ObjectId,
         required: true,
-        trim: true,
+        ref: 'User'
     },
-    name_of_regional_health_director : {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    address_of_regional_health_director : {
-        type: String,
-        required: true,
-        trim: true,
-    }
 }, {
     timestamps: true
 })
 
-const Product = mongoose.model('Product', userSchema)
+class ProductClass {
 
-export default Product
+    static async addNewProduct(data)
+    {
+        return this.create(data);
+    }
+}
+
+productSchema.loadClass(ProductClass)
+
+const Product = mongoose.model('Product', productSchema)
+
+export { Product }

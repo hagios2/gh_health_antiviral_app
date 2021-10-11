@@ -38,7 +38,7 @@ const facilitatorSchema = new Schema({
 
 class FacilitatorClass {
 
-    async addNewFacilitator(data)
+    static async addNewFacilitator(data)
     {
         return this.create(data);
     }

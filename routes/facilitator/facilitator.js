@@ -1,7 +1,7 @@
 import express from 'express'
-import FacilitatorAuthController from "../../Controllers/Facilitator/FacilitatorAuthController.js"
 import { verifyFacilitatorToken } from '../../Middleware/auth.js'
 import VictimsController from "../../Controllers/Facilitator/VictimsController";
+import ProductsController from "../../Controllers/Facilitator/ProductsController";
 
 const router = express.Router()
 
@@ -18,5 +18,20 @@ router.put("/update/:victim_id/victim", verifyFacilitatorToken, VictimsControlle
 router.delete("/delete/:victim_id/victim", verifyFacilitatorToken, VictimsController.deleteVictim)
 
 //------------------------------------ End Victims Route -----------------------------------------------
+
+
+//------------------------------------ Products Route -----------------------------------------------
+
+router.post("product/create", verifyFacilitatorToken, ProductsController.createProduct)
+
+router.get("/fetch/products", verifyFacilitatorToken, ProductsController.fetchProducts)
+
+router.get("/fetch/:product_id/product", verifyFacilitatorToken, ProductsController.fetchProduct)
+
+router.put("/update/:product_id/victim", verifyFacilitatorToken, ProductsController.updateProduct)
+
+router.delete("/delete/:product_id/victim", verifyFacilitatorToken, ProductsController.deleteProduct)
+
+//------------------------------------ End Products Route -----------------------------------------------
 
 export default router
