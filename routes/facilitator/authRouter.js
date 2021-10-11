@@ -3,11 +3,11 @@ import FacilitatorAuthController from "../../Controllers/Facilitator/Facilitator
 
 const router = express.Router()
 
-router.post("/add/new/admin", FacilitatorAuthController.createAccount)
+// router.post("/add/new/admin", FacilitatorAuthController.createAccount)
 
 router.post("/auth/login", FacilitatorAuthController.login)
 
-router.post("/auth/logout", FacilitatorAuthController.out)
+// router.post("/auth/logout", FacilitatorAuthController.out)
 
 
 

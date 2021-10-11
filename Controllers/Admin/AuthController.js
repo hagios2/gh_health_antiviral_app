@@ -62,7 +62,7 @@ class AuthController
 
                 if(token && refresh_token)
                 {
-                    await RefreshToken.createToken({refresh_token})
+                    await RefreshToken.createToken({refresh_token, provider: 'admin'})
 
                     return successResponse(req, res, 'success', {token, refresh_token})
                 }
@@ -78,28 +78,30 @@ class AuthController
 
     async refreshToken(req, res)
     {
-        const refresh_token = req.body
+        const refresh_token = req.body.refresh_token
 
         if(refresh_token === null)
         {
             return res.sendStatus(401);
         }
 
-        const existing_token = RefreshToken.findOne({refresh_token, provider: 'admin'})
+        const existing_token = await RefreshToken.findOne({refresh_token, provider: 'admin'})
 
         if(existing_token)
         {
-            jwt.verify(refresh_token, process.env.REFRESH_SECRET, (error, admin) => {
+            const token =  jwt.verify(refresh_token, process.env.REFRESH_SECRET, (error, admin) => {
 
                 if(error)
                 {
                     return res.sendStatus(403)
                 }
 
-                const token = jwt.sign({ name: admin.name,  }, process.env.SECRET, {expiresIn: '30m'})
+                delete admin.iat //delete the previous issued at
 
-                return successResponse(req, res, 'success', { token })
-            })  
+                return jwt.sign({ admin }, process.env.SECRET, {expiresIn: '30m'})
+            })
+
+            return successResponse(req, res, 'success', { token })
 
         }
 

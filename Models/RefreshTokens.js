@@ -19,9 +19,9 @@ const refreshTokenSchema = new Schema({
 })
 
 
-class RefreshTokenClass{
+class RefreshTokenClass {
 
-    async createToken(data)
+    static async createToken(data)
     {
         return this.create(data)
     }

@@ -11,6 +11,8 @@ const router = express.Router()
 
 router.get("/add/new/admin", verifyToken, AdminAuthController.addAdmin)
 
+router.get("/fetch/admins", verifyToken, AdminAuthController.fetchAdmins)
+
 
 //----------------------- District -----------------------------
 

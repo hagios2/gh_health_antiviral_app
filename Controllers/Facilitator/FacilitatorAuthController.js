@@ -1,4 +1,4 @@
-import {Facilitator } from '../../Models/Facility.js';
+import {Facilitator } from '../../Models/User.js';
 import {successResponse, errorResponse} from '../../server_responses/response.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -75,6 +75,6 @@ class FacilitatorAuthController
 }
 
 
-const FacilitatorAuthController = new FacilitatorAuthController()
+const facilitatorAuthController = new FacilitatorAuthController()
 
-export default FacilitatorAuthController
+export default facilitatorAuthController
