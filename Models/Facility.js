@@ -18,7 +18,7 @@ const facilitySchema = new Schema({
         required: [true, 'longitude is required'],
         trim: true,
     },
-    district_id: {type: Schema.Types.ObjectId, ref: 'District', required: true},
+    district: {type: Schema.Types.ObjectId, ref: 'District', required: true},
 }, {
     timestamps: true
 })
@@ -28,7 +28,7 @@ class FacilityClass{
 
     static async addNewFacility(data)
     {
-        return await this.create(data)
+        return this.create(data)
     }
 }
 
@@ -36,4 +36,4 @@ facilitySchema.loadClass(FacilityClass)
 
 const Facility = mongoose.model('Facility', facilitySchema)
 
-export {Facility}
+export { Facility }

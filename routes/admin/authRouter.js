@@ -9,6 +9,10 @@ router.get("/add/new/admin", AdminAuthController.fetchAdmins)
 
 router.post("/login", AdminAuthController.login)
 
+router.post("/logout", AdminAuthController.logout)
+
+router.post("/refresh/token", AdminAuthController.refreshToken)
+
 export default router
 
 

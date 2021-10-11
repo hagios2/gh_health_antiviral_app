@@ -2,6 +2,7 @@ import {Admin} from '../../Models/Admin.js';
 import {successResponse, errorResponse} from '../../server_responses/response.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { RefreshToken } from '../../Models/RefreshTokens.js';
 
 class AuthController
 {
@@ -55,13 +56,15 @@ class AuthController
 
             if(await bcrypt.compare(password, admin.password))
             {   
-                const token = jwt.sign({ admin }, process.env.SECRET)
+                const token = jwt.sign({ admin }, process.env.SECRET, {expiresIn: '30m'})
 
-                if(token)
+                const refresh_token = jwt.sign({ admin }, process.env.REFRESH_SECRET)
+
+                if(token && refresh_token)
                 {
-                    console.log(token, 'access token')
+                    await RefreshToken.createToken({refresh_token})
 
-                    return successResponse(req, res, 'success', {token})
+                    return successResponse(req, res, 'success', {token, refresh_token})
                 }
             }
 
@@ -71,6 +74,51 @@ class AuthController
         {
             return errorResponse(req, res, error)
         }
+    }
+
+    async refreshToken(req, res)
+    {
+        const refresh_token = req.body
+
+        if(refresh_token === null)
+        {
+            return res.sendStatus(401);
+        }
+
+        const existing_token = RefreshToken.findOne({refresh_token, provider: 'admin'})
+
+        if(existing_token)
+        {
+            jwt.verify(refresh_token, process.env.REFRESH_SECRET, (error, admin) => {
+
+                if(error)
+                {
+                    return res.sendStatus(403)
+                }
+
+                const token = jwt.sign({ name: admin.name,  }, process.env.SECRET, {expiresIn: '30m'})
+
+                return successResponse(req, res, 'success', { token })
+            })  
+
+        }
+
+        return res.sendStatus(401)
+
+    }
+
+    async logout(req, res)
+    {
+       const refresh_token = req.body.refresh_token
+
+        if(refresh_token == null)
+        {
+            return res.sendStatus(401)
+        }
+
+        await RefreshToken.remove({refresh_token, provider: 'admin'})
+
+        return successResponse(req, res, 'success', 204)
     }
 }
 
