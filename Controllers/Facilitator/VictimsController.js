@@ -1,7 +1,7 @@
 import {Victim} from "../../Models/Victim.js";
 import { errorResponse,successResponse } from "../../server_responses/response.js";
 
-class DistrictController
+class VictimController
 {
     async createVictim(req, res)
     {
@@ -98,6 +98,6 @@ class DistrictController
     }
 }
 
-const district_controller = new DistrictController()
+const victim_controller = new VictimController()
 
-export default district_controller
+export default victim_controller
