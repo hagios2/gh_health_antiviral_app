@@ -34,6 +34,12 @@ class FacilityClass{
 
 facilitySchema.loadClass(FacilityClass)
 
+facilitySchema.virtual('facilitator', {
+    ref: 'User',
+    localField: '_id',
+    foreignField: 'facility'
+})
+
 const Facility = mongoose.model('Facility', facilitySchema)
 
 export { Facility }

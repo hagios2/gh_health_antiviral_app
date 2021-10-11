@@ -3,13 +3,13 @@ import FacilitatorAuthController from "../../Controllers/Facilitator/Facilitator
 
 const router = express.Router()
 
-// router.post("/add/new/admin", FacilitatorAuthController.createAccount)
+router.post("/add/new/admin", FacilitatorAuthController.createFacilitator)
 
-router.post("/auth/login", FacilitatorAuthController.login)
+router.post("/login", FacilitatorAuthController.login)
 
-// router.post("/auth/logout", FacilitatorAuthController.out)
+router.post("/auth/logout", FacilitatorAuthController.logout)
 
-
+router.post("/auth/logout", FacilitatorAuthController.refreshToken)
 
 export default router
 

@@ -9,7 +9,7 @@ app.use('/admin/auth', admin_auth_router)
 
 app.use('/admin', admin_router)
 
-app.use('/', facilitator_auth_router)
+app.use('/auth', facilitator_auth_router)
 
 // app.use('/facility', admin_router)
 
