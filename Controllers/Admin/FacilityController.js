@@ -23,10 +23,9 @@ class FacilityController
     async getFacilities(req, res)
     {
         try{
-            
-            let facilities = await Facility.find({})
 
-            return successResponse(req, res, 'success', facilities)
+            return successResponse(req, res, 'success', res.paginatedResults )
+
         }
         catch(error){
             

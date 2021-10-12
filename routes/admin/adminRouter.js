@@ -4,7 +4,11 @@ import DistrictController from '../../Controllers/Admin/DistrictController.js'
 import FacilityController from '../../Controllers/Admin/FacilityController.js'
 import RegionController from '../../Controllers/Admin/RegionController.js'
 import { verifyToken } from '../../Middleware/auth.js'
+import { paginator} from "../../Controllers/Services/paginator_service.js";
 import { check} from "express-validator";
+import {District} from "../../Models/District.js";
+import {Region} from "../../Models/Region.js";
+import {Facility} from "../../Models/Facility.js";
 
 
 const router = express.Router()
@@ -17,7 +21,7 @@ router.get("/fetch/admins", verifyToken, AdminAuthController.fetchAdmins)
 
 //----------------------- District -----------------------------
 
-router.get("/get/districts", verifyToken, DistrictController.getDistricts)
+router.get("/get/districts", verifyToken, paginator(District), DistrictController.getDistricts)
 
 router.get("/district/:district_id/fetch", verifyToken, DistrictController.getDistrict)
 
@@ -34,7 +38,7 @@ router.put("/update/:district_id/district", verifyToken, DistrictController.upda
 
 router.get("/get/regions", verifyToken, RegionController.getRegions)
 
-router.get("/get/:region_id/region", verifyToken, RegionController.getRegion)
+router.get("/get/:region_id/region", verifyToken, paginator(Region), RegionController.getRegion)
 
 router.post("/create/region", verifyToken, RegionController.createRegion)
 
@@ -49,7 +53,7 @@ router.put("/update/:region_id/region", verifyToken, RegionController.updateRegi
 
 router.get("/get/facilities", verifyToken, FacilityController.getFacilities)
 
-router.get("/get/:facility_id/facility", verifyToken, FacilityController.getFacility)
+router.get("/get/:facility_id/facility", verifyToken, paginator(Facility), FacilityController.getFacility)
 
 router.post("/create/facility", verifyToken, FacilityController.createFacility)
 

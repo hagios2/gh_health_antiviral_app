@@ -25,16 +25,13 @@ class ProductsController
     {
         try{
 
-            let products = await Product.find({})
-
-            return successResponse(req, res, 'success', products)
+            return successResponse(req, res, 'success', res.paginatedResults )
         }
         catch(error){
 
             return errorResponse(req,res,error)
         }
     }
-
 
     async fetchProduct(req, res)
     {

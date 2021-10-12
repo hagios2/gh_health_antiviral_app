@@ -22,9 +22,7 @@ class VictimController
     {
         try{
 
-            let victims = await Victim.find({})
-
-            return successResponse(req, res, 'success', victims)
+            return successResponse(req, res, 'success', res.paginatedResults )
         }
         catch(error){
 

@@ -30,14 +30,12 @@ class RegionController
     async getRegions(req, res)
     {
         try{
-            
-            let regions = await Region.find({})
 
-            return successResponse(req, res, 'success', regions)
+            return successResponse(req, res, 'success', res.paginatedResults )
         }
         catch(error){
             
-            return errorResponse(req,res,error)
+            return errorResponse(req, res, error)
         }
     }
 

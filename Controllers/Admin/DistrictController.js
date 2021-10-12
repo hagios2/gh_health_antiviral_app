@@ -28,10 +28,8 @@ class DistrictController
     async getDistricts(req, res)
     {
         try{
-            
-            let districts = await District.find({})
 
-            return successResponse(req, res, 'success', districts)
+            return successResponse(req, res, 'success', res.paginatedResults )
         }
         catch(error){
             
