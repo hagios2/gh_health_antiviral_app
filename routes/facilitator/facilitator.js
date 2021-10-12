@@ -22,15 +22,15 @@ router.delete("/delete/:victim_id/victim", verifyFacilitatorToken, VictimsContro
 
 //------------------------------------ Products Route -----------------------------------------------
 
-router.post("product/create", verifyFacilitatorToken, ProductsController.createProduct)
+router.post("/create/product", verifyFacilitatorToken, ProductsController.createProduct)
 
 router.get("/fetch/products", verifyFacilitatorToken, ProductsController.fetchProducts)
 
 router.get("/fetch/:product_id/product", verifyFacilitatorToken, ProductsController.fetchProduct)
 
-router.put("/update/:product_id/victim", verifyFacilitatorToken, ProductsController.updateProduct)
+router.put("/update/:product_id/product", verifyFacilitatorToken, ProductsController.updateProduct)
 
-router.delete("/delete/:product_id/victim", verifyFacilitatorToken, ProductsController.deleteProduct)
+router.delete("/delete/:product_id/product", verifyFacilitatorToken, ProductsController.deleteProduct)
 
 //------------------------------------ End Products Route -----------------------------------------------
 

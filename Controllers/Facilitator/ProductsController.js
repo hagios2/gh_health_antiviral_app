@@ -9,7 +9,7 @@ class ProductsController
 
             let {name, quantity, expiry_date, facility, source, brand, description } = req.body
 
-            let receiver = req.user
+            let receiver = req.user.facilitator._id
 
             let new_product = await Product.addNewProduct({name, quantity, expiry_date, facility, source, brand, receiver, description})
 
@@ -68,11 +68,11 @@ class ProductsController
 
             let { name, quantity, expiry_date, facility, source, brand, description } = req.body
 
-            let receiver = req.user
+            let receiver = req.user.facilitator._id
 
             let updated_data = await Product.updateOne({_id: req.params.product_id}, {name, quantity, expiry_date, facility, source, brand, description, receiver })
 
-            return successResponse(req, res, 'Victim updated', updated_data)
+            return successResponse(req, res, 'Product updated', updated_data)
         }
         catch(error){
 
@@ -94,7 +94,7 @@ class ProductsController
 
             await Product.deleteOne({_id: req.params.product_id})
 
-            return successResponse(req, res, 'Victim deleted', {})
+            return successResponse(req, res, 'Product deleted', {})
         }
         catch(error){
 

@@ -51,18 +51,18 @@ class FacilitatorAuthController
 
             let {email, password} = req.body
 
-            let facility = await Facilitator.findOne({email, status: true})
+            let facilitator = await Facilitator.findOne({email, status: true})
 
-            if(!facility)
+            if(!facilitator)
             {
                 return errorResponse(req, res, 'Invalid Credentials', 401)
             }
 
-            if(await bcrypt.compare(password, facility.password))
+            if(await bcrypt.compare(password, facilitator.password))
             {
-                const token = jwt.sign({ facility }, process.env.FACILITATOR_SECRET)
+                const token = jwt.sign({ facilitator }, process.env.FACILITATOR_SECRET)
 
-                const refresh_token = jwt.sign({ facility }, process.env.FACILITATOR_REFRESH_SECRET)
+                const refresh_token = jwt.sign({ facilitator }, process.env.FACILITATOR_REFRESH_SECRET)
 
                 if(token && refresh_token)
                 {
