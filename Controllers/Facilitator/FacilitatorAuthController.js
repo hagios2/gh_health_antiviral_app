@@ -1,8 +1,10 @@
-import {Facilitator } from '../../Models/User.js';
+import { Facilitator } from '../../Models/User.js';
 import {successResponse, errorResponse} from '../../server_responses/response.js'
+import {RefreshToken} from "../../Models/RefreshTokens.js";
+import { facilitatorRegisterMailer } from "../../Mails/FacilitatorRegisterMailer.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import {RefreshToken} from "../../Models/RefreshTokens";
+
 
 class FacilitatorAuthController
 {
@@ -16,7 +18,9 @@ class FacilitatorAuthController
 
             if(hashedPassword)
             {
-                await Facilitator.addNewFacilitator({name, email, password: hashedPassword, facility, isSuperAdmin: true})
+                let facilitator = await Facilitator.addNewFacilitator({name, email, password: hashedPassword, facility, isSuperAdmin: true})
+
+                await facilitatorRegisterMailer(facilitator)
 
                 return successResponse(req, res, 'success', {}, 201)
             }
@@ -58,9 +62,13 @@ class FacilitatorAuthController
             {
                 const token = jwt.sign({ facility }, process.env.FACILITATOR_SECRET)
 
-                if(token)
+                const refresh_token = jwt.sign({ facility }, process.env.FACILITATOR_REFRESH_SECRET)
+
+                if(token && refresh_token)
                 {
-                    return successResponse(req, res, 'success', {token})
+                    await RefreshToken.createToken({refresh_token, provider: 'facilitator'})
+
+                    return successResponse(req, res, 'success', {token, refresh_token})
                 }
 
                 return errorResponse(req, res, 'Whoops something went wrong')
@@ -116,7 +124,7 @@ class FacilitatorAuthController
             return res.sendStatus(401)
         }
 
-        await RefreshToken.remove({refresh_token, provider: 'facilitator'})
+        await RefreshToken.deleteOne({refresh_token, provider: 'facilitator'})
 
         return successResponse(req, res, 'success', {}, 204)
     }

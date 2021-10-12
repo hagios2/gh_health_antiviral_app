@@ -1,7 +1,7 @@
 import express from 'express'
 import { verifyFacilitatorToken } from '../../Middleware/auth.js'
-import VictimsController from "../../Controllers/Facilitator/VictimsController";
-import ProductsController from "../../Controllers/Facilitator/ProductsController";
+import VictimsController from "../../Controllers/Facilitator/VictimsController.js";
+import ProductsController from "../../Controllers/Facilitator/ProductsController.js";
 
 const router = express.Router()
 

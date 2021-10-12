@@ -90,7 +90,7 @@ class FacilityController
                 return errorResponse(req, res, 'Not Found', 404)
             }
 
-            await Facility.remove({_id: req.params.facility_id})
+            await Facility.deleteOne({_id: req.params.facility_id})
 
             return successResponse(req, res, 'Facility deleted')
         }

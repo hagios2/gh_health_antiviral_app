@@ -87,7 +87,7 @@ class VictimController
                 return errorResponse(req, res, 'Not Found', 404)
             }
 
-            await Victim.remove({_id: req.params.victim_id})
+            await Victim.deleteOne({_id: req.params.victim_id})
 
             return successResponse(req, res, 'Victim deleted', {})
         }

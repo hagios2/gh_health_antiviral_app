@@ -39,6 +39,6 @@ class VictimClass {
 
 victimSchema.loadClass(VictimClass)
 
-const Victim = mongoose.model('Victim', VictimClass )
+const Victim = mongoose.model('Victim', victimSchema)
 
 export { Victim }

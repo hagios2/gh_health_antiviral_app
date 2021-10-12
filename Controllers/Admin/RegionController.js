@@ -98,7 +98,7 @@ class RegionController
                 return errorResponse(req, res, 'Not Found', 404)
             }
 
-            await Region.remove({_id: req.params.region_id})
+            await Region.deleteOne({_id: req.params.region_id})
 
             return successResponse(req, res, 'Region deleted', {})
         }

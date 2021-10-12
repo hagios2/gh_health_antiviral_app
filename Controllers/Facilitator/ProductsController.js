@@ -92,7 +92,7 @@ class ProductsController
                 return errorResponse(req, res, 'Not Found', 404)
             }
 
-            await Product.remove({_id: req.params.product_id})
+            await Product.deleteOne({_id: req.params.product_id})
 
             return successResponse(req, res, 'Victim deleted', {})
         }

@@ -33,7 +33,7 @@ const productSchema = new Schema({
         trim: true,
     },
     description : {
-        type: Text,
+        type: String,
         required: false,
         trim: true,
     },

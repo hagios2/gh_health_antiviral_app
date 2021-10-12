@@ -118,7 +118,7 @@ class AuthController
             return res.sendStatus(401)
         }
 
-        await RefreshToken.remove({refresh_token, provider: 'admin'})
+        await RefreshToken.deleteOne({refresh_token, provider: 'admin'})
 
         return successResponse(req, res, 'success', {}, 204)
     }

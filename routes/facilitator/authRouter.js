@@ -4,7 +4,7 @@ import { verifyFacilitatorToken } from '../../Middleware/auth.js'
 
 const router = express.Router()
 
-router.post("/add/new/admin", verifyFacilitatorToken, FacilitatorAuthController.createFacilitator)
+router.post("/facilitator/register", FacilitatorAuthController.createFacilitator)
 
 router.post("/login", FacilitatorAuthController.login)
 

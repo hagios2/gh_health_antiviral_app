@@ -96,7 +96,7 @@ class DistrictController
                 return errorResponse(req, res, 'Not Found', 404)
             }
 
-            await District.remove({_id: req.params.district_id})
+            await District.deleteOne({_id: req.params.district_id})
 
             return successResponse(req, res, 'District deleted', {})
         }
