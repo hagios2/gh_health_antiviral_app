@@ -7,7 +7,7 @@ const router = express.Router()
 
 //------------------------------------ Victims Route -----------------------------------------------
 
-router.post("victim/create", verifyFacilitatorToken, VictimsController.createVictim)
+router.post("/create/victim", verifyFacilitatorToken, VictimsController.createVictim)
 
 router.get("/fetch/victims", VictimsController.fetchVictims)
 

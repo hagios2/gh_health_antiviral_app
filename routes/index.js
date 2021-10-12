@@ -12,6 +12,6 @@ app.use('/admin', admin_router)
 
 app.use('/auth', facilitator_auth_router)
 
-app.use('/', facilitator_router)
+app.use('/facilitator', facilitator_router)
 
 export default app

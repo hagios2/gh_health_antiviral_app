@@ -82,7 +82,7 @@ class VictimController
 
             let victim = await Victim.findById(req.params.victim_id)
 
-            if(Object.keys(victim).length === 0)
+            if(!victim)
             {
                 return errorResponse(req, res, 'Not Found', 404)
             }
